@@ -18,9 +18,6 @@ class HangpersonGame
     @total_wrong = 0
     @gameStatus = :play
 
-    
-    #@lstRight = Hash.new
-    #@lstWrong  = Hash.new
     @lstLetters = Hash.new
     @guessedword = Array.new(@word.length){ |i| '-' } 
     
@@ -119,7 +116,6 @@ class HangpersonGame
     @wrong_guesses
   end
 
-  #-----------------------------------------------------------------------------
   def wrong_guesses= (value)
     @wrong_guesses = value
   end

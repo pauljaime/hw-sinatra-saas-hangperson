@@ -40,6 +40,14 @@ class HangpersonApp < Sinatra::Base
   post '/guess' do
     letter = params[:guess].to_s[0]
     ### YOUR CODE HERE ###
+    if /#{letter}/.match(@game.wrong_guesses + @game.guesses) != nil   
+      flash[:message] = "You have already used that letter."
+    else
+      if @game.guess(letter) == false
+        flash[:message] = "Invalid guess."
+      end
+    end
+    
     redirect '/show'
   end
   
@@ -49,8 +57,15 @@ class HangpersonApp < Sinatra::Base
   # Notice that the show.erb template expects to use the instance variables
   # wrong_guesses and word_with_guesses from @game.
   get '/show' do
-    ### YOUR CODE HERE ###
-    erb :show # You may change/remove this line
+    
+    gamestatus = @game.check_win_or_lose
+    if gamestatus ==:win
+      redirect '/win'
+    elsif gamestatus == :lose
+      redirect '/lose'
+    else
+      erb :show # You may change/remove this line
+    end
   end
   
   get '/win' do
